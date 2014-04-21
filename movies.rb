@@ -30,7 +30,7 @@ post '/movies' do
 end
 
 def dbname
-  "test.db"
+  "testdb"
 end
 
 def create_movies_table
