@@ -1,22 +1,18 @@
 <!-- something about the @results value is not nil if there is no movie in the database. it returns # or #> ...what does that mean in ruby?? -->
-	
 
-<%=p @results.inspect %>
-	<% if @results == '#' %>
+<% if @results.ntuples == 0%>
 	<p>Sorry, that movie doesn't exist. Please search again:</p>
 			<form action="/results" method="get">
 			<input type="text" name="title" placeholder="ex: Titanic"/>
 			<input type="submit"/>
 			</form>
 
-
-	<% else %>
+<% else %>
 		<p>Click on a title to see more information.</p>
 
 		<% @results.each do |movie| %>
 		<a href="/title/<%= movie['id'] %>"> <%= movie["title"] %> - <%= movie["year"] %> </a>
 		<%end%>
 
-	<%end%>
-
+<%end%>
 <!-- insert if statement for when movie doesn't exist in database -->
