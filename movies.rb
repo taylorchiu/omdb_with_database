@@ -24,15 +24,8 @@ end
 get '/title/:id' do
   c = PGconn.new(:host => "localhost", :dbname => dbname)
   @results = c.exec_params("SELECT * FROM movies WHERE id = $1;", [params[:id]])
-  c.close
-
-  c = PGconn.new(:host => "localhost", :dbname => dbname)
   @movies_actors_common_val = c.exec_params("SELECT * FROM movies_actors WHERE movie_id = $1", [params[:id]])
-  c.close
-  @actor_id = @movies_actors_common_val[0]["actor_id"]
-
-  c = PGconn.new(:host => "localhost", :dbname => dbname)
-  @actor = c.exec_params("SELECT * FROM actors WHERE id = $1", [@actor_id])
+  @actor = c.exec_params("SELECT * FROM actors WHERE id = $1", [@movies_actors_common_val[0]["actor_id"]])
   c.close
 
   erb :info
