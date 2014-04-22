@@ -1,11 +1,15 @@
+<!--	 MOVIE DETAILS PAGE -->
 
 More info about <%= @results[0]['title'] %><br></br>
 <p>
-<strong>Title:</strong><%= @results[0]["title"] %><br></br>
-<strong>Date Released:</strong><%= @results[0]["year"] %><br></br>
-<strong>Description:</strong>"<%= @results[0]["description"] %>"<br></br>
-<strong>Rating:</strong>strong<%= @results[0]["rating"] %><br></br>
+<strong>Title: </strong><%= @results[0]["title"] %><br></br>
+<strong>Date Released: </strong><%= @results[0]["year"] %><br></br>
+<strong>Description: </strong>"<%= @results[0]["description"] %>"<br></br>
+<strong>Rating: </strong>strong<%= @results[0]["rating"] %><br></br>
 </p>
 
+Actors who starred in <%= @results[0]['title'] %> :<br></br>
+ID: <%= @movies_actors_common_val[0]["actor_id"] %><br></br>
+Name: <%= @actor[0]["name"] %><br></br>
 
 <a href="/">Return to main menu</a>
