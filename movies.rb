@@ -10,24 +10,44 @@ configure do
 end
 
 get '/' do
-  #Add code here
+erb :index
 end
 
 
-#Add code here
+get '/results' do
+  c = PGconn.new(:host => "localhost", :dbname => dbname)
+  @results = c.exec_params("SELECT * FROM movies WHERE title = $1;", [params["title"]])  # the second value must be an array!
+  c.close
+    erb :show
+end
 
+get '/title/:id' do
+  c = PGconn.new(:host => "localhost", :dbname => dbname)
+  @results = c.exec_params("SELECT * FROM movies WHERE id = $1;", [params[:id]])
+  c.close
+  erb :info
+end
 
 get '/movies/new' do
-  erb :new_movie
+  erb :new
 end
 
 post '/movies' do
   c = PGconn.new(:host => "localhost", :dbname => dbname)
-  c.exec_params("INSERT INTO movies (title, year) VALUES ($1, $2)",
-                  [params["title"], params["year"]])
+  @new_movie = c.exec_params("INSERT INTO movies (title, year, description, rating) VALUES ($1, $2, $3, $4)",
+                  [params["title"], params["year"], params["description"], params["rating"]])
   c.close
-  redirect '/'
+  redirect '/confirmation'
+  erb :new
 end
+
+get '/confirmation' do
+  c = PGconn.new(:host => "localhost", :dbname => dbname)
+  @confirmed = c.exec_params("SELECT * FROM movies WHERE title = $1;", [params["title"]])
+  c.close
+  erb :confirmation
+end
+
 
 def dbname
   "testdb"

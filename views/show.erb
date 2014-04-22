@@ -1,0 +1,8 @@
+
+	<p>Click on a title to see more information.</p>
+
+	<% @results.each do |movie| %>
+	<a href="/title/<%= movie['id'] %>"> <%= movie["title"] %> - <%= movie["year"] %> </a>
+	<%end%>
+
+<!-- insert if statement for when movie doesn't exist in database -->
